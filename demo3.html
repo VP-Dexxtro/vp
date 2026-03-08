@@ -1,114 +1,159 @@
-@@ -0,0 +1,114 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>Live Stream</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-:root { --p: #00ff6a; --b: #0a0a0a; }
-*{box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
-
-body { 
-    margin: 0; 
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif; 
-    background: var(--b); 
-    color: #fff; 
-    overflow: hidden; 
-    user-select: none; 
+:root{
+    --primary:#00ff6a;
+    --bg:#0a0a0a;
 }
 
-.main-ui { 
-    display: flex; 
-    flex-direction: column; 
-    justify-content: center;
-    height: 100vh; 
-    max-width: 900px; 
-    margin: 0 auto; 
-    padding: 15px; 
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
 }
 
-.video-container { 
-    width: 100%; 
-    position: relative; 
-    padding-top: 56.25%; 
-    background: #000; 
-    border-radius: 12px; 
-    overflow: hidden; 
-    border: 1px solid rgba(255,255,255,0.1); 
-    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+    background:var(--bg);
+    color:#fff;
+    overflow:hidden;
 }
 
-#stream-player { 
-    position: absolute; 
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: 100%; 
-    border: none; 
+.main-ui{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    height:100vh;
+    max-width:900px;
+    margin:auto;
+    padding:15px;
 }
 
-.expired-msg {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-weight: 600;
-    color: rgba(255,255,255,0.5);
-    text-transform: uppercase;
-    letter-spacing: 1px;
+.video-container{
+    width:100%;
+    position:relative;
+    padding-top:56.25%;
+    background:#000;
+    border-radius:12px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,0.1);
+    box-shadow:0 10px 40px rgba(0,0,0,0.6);
+}
+
+#stream-player{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    border:none;
+}
+
+.message{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center;
+    color:rgba(255,255,255,0.6);
+    font-weight:600;
 }
 </style>
 </head>
 
-<body oncontextmenu="return false">
+<body>
 
 <div class="main-ui">
-  <div class="video-container" id="viewport">
-      </div>
+    <div class="video-container" id="viewport"></div>
 </div>
 
 <script>
-/**
- * Encoded Source URL: https://allrounder-live.pages.dev/star/star-1-hindi
- * Base64: aHR0cHM6Ly9hbGxyb3VuZGVyLWxpdmUucGFnZXMuZGV2L3N0YXIvc3Rhci0xLWhpbmRp
- */
-const _0xV1 = "aHR0cHM6Ly9hbGxyb3VuZGVyLWxpdmUucGFnZXMuZGV2L3N0YXIvc3Rhci0xLWhpbmRp";
 
-window.onload = function() {
+/* Base64 encoded stream */
+const STREAM = "aHR0cHM6Ly9hbGxyb3VuZGVyLWxpdmUucGFnZXMuZGV2L3N0YXIvc3Rhci0xLWhpbmRp";
+
+/* Expiry Date */
+const EXPIRY = new Date(2026,2,9,23,59,59);
+
+const viewport = document.getElementById("viewport");
+
+/* Chrome Detection */
+function isChrome(){
+    const ua = navigator.userAgent;
+    return /Chrome/.test(ua) && !/Edg|OPR/.test(ua);
+}
+
+/* Basic AdBlock Detection */
+function detectAdBlock(){
+    const testAd = document.createElement("div");
+    testAd.className = "adsbox";
+    testAd.style.position="absolute";
+    testAd.style.left="-999px";
+    document.body.appendChild(testAd);
+
+    setTimeout(()=>{
+        if(testAd.offsetHeight === 0){
+            viewport.innerHTML =
+            "<div class='message'>Disable AdBlock to watch the stream</div>";
+        }
+        testAd.remove();
+    },100);
+}
+
+/* Initialize Player */
+function initPlayer(){
+
     const now = new Date();
-    const expiry = new Date(2026, 2, 9, 23, 59, 59);
-    const viewport = document.getElementById('viewport');
 
-    if (now > expiry) {
-        viewport.innerHTML = "<div class='expired-msg'>Stream Link Expired</div>";
+    if(!isChrome()){
+        viewport.innerHTML =
+        "<div class='message'>Please open this stream in Google Chrome</div>";
         return;
     }
 
-    const src = atob(_0xV1);
-    
-    // ANTI-AD PROTECTION: Restricted sandbox to block popups/redirects
+    if(now > EXPIRY){
+        viewport.innerHTML =
+        "<div class='message'>Stream Link Expired</div>";
+        return;
+    }
+
+    const src = atob(STREAM);
+
     viewport.innerHTML = `
-        <iframe 
+        <iframe
             id="stream-player"
-            src="${src}" 
-            allow="autoplay; encrypted-media; fullscreen; picture-in-picture" 
-            sandbox="allow-scripts allow-same-origin allow-forms"
-            allowfullscreen="true" 
+            src="${src}"
+            allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+            allowfullscreen
             referrerpolicy="no-referrer">
         </iframe>
     `;
-};
+
+    detectAdBlock();
+}
+
+window.onload = initPlayer;
+
+
+/* Disable Right Click */
+document.addEventListener("contextmenu",e=>e.preventDefault());
 
 /* Basic DevTools Protection */
-document.onkeydown = (e) => {
-    if(e.keyCode == 123 || 
-      (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || 
-      (e.ctrlKey && e.keyCode == 85)) {
-        return false;
+document.addEventListener("keydown",function(e){
+    if(
+        e.key === "F12" ||
+        (e.ctrlKey && e.shiftKey && ["I","J"].includes(e.key)) ||
+        (e.ctrlKey && e.key === "U")
+    ){
+        e.preventDefault();
     }
-};
+});
+
 </script>
 
 </body>
