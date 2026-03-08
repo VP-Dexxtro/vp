@@ -4,282 +4,82 @@
 <meta charset="UTF-8">
 <title>CricxCrate | Star Sports 1HD Hindi</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --big-stone: #192D3C;
-  --cascade: #96AAAA;
-  --seashell: #F0F0F0;
-  --premium-red: #FF3B30; 
-  --bg-dark: #0A0F14; 
-  --card-bg: #131B24;
-  --text-dim: #94A3B8;
-  --border: rgba(255, 255, 255, 0.06);
+body{
+margin:0;
+font-family:'Inter',sans-serif;
+background:#0A0F14;
+color:white;
+display:flex;
+justify-content:center;
 }
 
-* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  background-color: var(--bg-dark);
-  color: var(--seashell);
-  display: flex;
-  justify-content: center;
-  overflow-x: hidden;
+.app{
+width:100%;
+max-width:480px;
+padding:20px;
 }
 
-.app-container {
-  width: 100%;
-  max-width: 480px;
-  padding: 20px;
-  min-height: 100vh;
+.header{
+font-size:20px;
+font-weight:800;
+margin-bottom:15px;
 }
 
-.header-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 14px;
+.player{
+width:100%;
+aspect-ratio:16/9;
+background:black;
+border-radius:20px;
+overflow:hidden;
 }
 
-.brand-meta h1 { font-size: 19px; margin: 0; font-weight: 800; }
-
-.join-mini {
-  background: var(--premium-red);
-  color: #fff;
-  padding: 8px 18px;
-  border-radius: 12px;
-  font-size: 13px;
-  font-weight: 700;
-  text-decoration: none;
+iframe{
+width:100%;
+height:100%;
+border:none;
 }
 
-.video-frame {
-  width: 100%;
-  aspect-ratio: 16/9;
-  background: #000;
-  border-radius: 26px;
-  overflow: hidden;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-  margin-bottom: 14px;
-  border: 1px solid var(--border);
-  position: relative;
+.channel{
+display:flex;
+align-items:center;
+gap:12px;
+margin-top:15px;
 }
 
-#stream-player { 
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%; 
-  height: 100%; 
-  border: none; 
-}
-
-.channel-info {
-  background: var(--card-bg);
-  border-radius: 20px;
-  padding: 16px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 24px;
-  border: 1px solid var(--border);
-}
-
-.channel-logo-img {
-  width: 50px;
-  height: 50px;
-  border-radius: 12px;
-  object-fit: cover;
-  background: #1a1a1a;
-  border: 1px solid var(--border);
-}
-
-.digg-panel {
-  background: var(--card-bg);
-  border-radius: 28px;
-  padding: 28px;
-  text-align: center;
-  border: 1px solid var(--border);
-}
-
-.digg-panel h2 { font-size: 21px; margin: 0 0 8px; font-weight: 700; }
-.digg-panel p { color: var(--text-dim); font-size: 14px; margin: 0 0 24px; line-height: 1.5; }
-
-.btn-solid-red {
-  background: var(--premium-red);
-  color: #fff;
-  width: 100%;
-  padding: 18px;
-  border-radius: 18px;
-  font-weight: 700;
-  font-size: 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.utility-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-top: 15px;
-}
-.util-btn {
-  background: rgba(255, 255, 255, 0.03);
-  color: var(--cascade);
-  padding: 14px;
-  border-radius: 16px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.94);
-  backdrop-filter: blur(12px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-}
-.popup {
-  background: var(--card-bg);
-  width: 90%;
-  max-width: 380px;
-  border-radius: 35px;
-  padding: 40px 30px;
-  text-align: center;
-  border: 1px solid var(--border);
-}
-
-.popup h2 { font-size: 30px; margin: 0; font-weight: 800; }
-.popup p { color: var(--text-dim); margin: 18px 0 30px; font-size: 15px; line-height: 1.6; }
-
-.already-joined-btn {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--cascade);
-  padding: 10px 24px;
-  border-radius: 100px;
-  font-size: 12px;
-  margin-top: 20px;
-  cursor: pointer;
+.channel img{
+width:45px;
+height:45px;
+border-radius:10px;
 }
 </style>
 </head>
-<body oncontextmenu="return false">
 
-<div class="overlay" id="popup">
-  <div class="popup">
-    <h2>Welcome 🦁</h2>
-    <p>Join on Telegram for live match clips, exclusive highlights & updates 📸 🚀</p>
-    <a href="https://t.me/+t991_pRD-zs5NzY1" class="btn-solid-red" target="_blank">JOIN CHANNEL</a>
-    <button class="already-joined-btn" onclick="closePopup()">I'm already joined</button>
-  </div>
+<body>
+
+<div class="app">
+
+<div class="header">CricxCrate</div>
+
+<div class="player">
+<iframe src="https://allrounder-live.pages.dev/star/star-1-hindi"
+allowfullscreen
+allow="autoplay; encrypted-media">
+</iframe>
 </div>
 
-<div class="app-container">
-  <div class="header-card">
-    <div class="brand-meta">
-      <h1>CricxCrate</h1>
-    </div>
-    <a href="https://t.me/+t991_pRD-zs5NzY1" class="join-mini" target="_blank">Join</a>
-  </div>
-
-  <div class="video-frame" id="viewport">
-      <div style="color: white; display: flex; align-items: center; justify-content: center; height: 100%;">
-          Initializing Stream...
-      </div>
-  </div>
-
-  <div class="channel-info">
-    <img src="https://img.media.jio.com/tvpimages/5/6/301982_1749665314605_l_medium.jpg" alt="Star Sports 1HD Hindi" class="channel-logo-img">
-    <div>
-      <h3 style="margin:0; font-size:16px; font-weight: 700;">Star Sports 1HD Hindi</h3>
-      <p style="margin:4px 0 0; font-size:12px; color:var(--cascade);">Sports • Hindi</p>
-    </div>
-  </div>
-
-  <div class="digg-panel">
-    <h2>Stay Updated!</h2>
-    <p>Live match clip links 🎥, rare clips 🔥 and much more — all in one place 🚀</p>
-    
-    <a href="https://t.me/+t991_pRD-zs5NzY1" class="btn-solid-red" target="_blank">Join Telegram For More Links</a>
-    
-    <div class="utility-row">
-      <div class="util-btn" onclick="sharePage()">📤 Share</div>
-      <div class="util-btn" onclick="copyLink()">🔗 Copy Link</div>
-    </div>
-  </div>
-
-  <footer style="text-align:center; font-size:13px; color:var(--text-dim); margin-top:40px; padding-bottom: 30px;">
-    Made with ❤️ 🫳🏻 Made for you<br>
-    <span style="font-weight: 700; margin-top: 10px; display: inline-block;">© CricxCrate</span>
-  </footer>
+<div class="channel">
+<img src="https://img.media.jio.com/tvpimages/5/6/301982_1749665314605_l_medium.jpg">
+<div>
+<b>Star Sports 1HD Hindi</b><br>
+<small>Sports • Hindi</small>
+</div>
 </div>
 
-<script>
-const _0xH1 = "aHR0cHM6Ly9hbGxyb3VuZGVyLWxpdmUucGFnZXMuZGV2L3N0YXIvc3Rhci0xLWhpbmRp";
-
-window.onload = function() {
-    if(sessionStorage.getItem("elite_access") === "true") {
-        document.getElementById("popup").style.display = "none";
-    }
-
-    const src = atob(_0xH1);
-    const viewport = document.getElementById('viewport');
-    
-    /**
-     * FIX: The "sandbox" attribute has been removed completely.
-     * This ensures the source script can execute without restrictions.
-     */
-    viewport.innerHTML = `
-        <iframe 
-            id="stream-player"
-            src="${src}" 
-            allow="autoplay; encrypted-media; fullscreen" 
-            allowfullscreen="true" 
-            referrerpolicy="no-referrer">
-        </iframe>
-    `;
-};
-
-function closePopup() {
-  document.getElementById("popup").style.display = "none";
-  sessionStorage.setItem("elite_access", "true");
-}
-
-function copyLink() {
-  navigator.clipboard.writeText(window.location.href);
-  alert("Link Copied!");
-}
-
-function sharePage() {
-  if(navigator.share) {
-    navigator.share({ title: 'CricxCrate Live', url: window.location.href });
-  } else {
-    copyLink();
-  }
-}
-
-// Basic Anti-Inspect Logic
-document.onkeydown = (e) => {
-    if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85)) return false;
-};
-</script>
+</div>
 
 </body>
 </html>
