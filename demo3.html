@@ -15,7 +15,6 @@ body {
     background: var(--b); 
     color: #fff; 
     overflow: hidden; 
-    user-select: none; 
 }
 
 .main-ui { 
@@ -47,64 +46,28 @@ body {
     height: 100%; 
     border: none; 
 }
-
-.expired-msg {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-weight: 600;
-    color: rgba(255,255,255,0.5);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
 </style>
 </head>
 
-<body oncontextmenu="return false">
+<body>
 
 <div class="main-ui">
   <div class="video-container" id="viewport">
-      </div>
+      <iframe 
+          id="stream-player"
+          src="https://allrounder-live.pages.dev/star/star-1-hindi" 
+          allow="autoplay; encrypted-media; fullscreen; picture-in-picture" 
+          allowfullscreen="true">
+      </iframe>
+  </div>
 </div>
 
 <script>
-/**
- * Encoded Source URL: https://allrounderid2.pages.dev/jjiotv/player?id=1985
- * Base64: aHR0cHM6Ly9hbGxyb3VuZGVyaWQyLnBhZ2VzLmRldi9qamlvdHYvcGxheWVyP2lkPTE5ODU=
- */
-const _0xV1 = "aHR0cHM6Ly9hbGxyb3VuZGVyaWQyLnBhZ2VzLmRldi9qamlvdHYvcGxheWVyP2lkPTE5ODU=";
-
-window.onload = function() {
-    const now = new Date();
-    const expiry = new Date(2026, 2, 9, 23, 59, 59);
-    const viewport = document.getElementById('viewport');
-
-    if (now > expiry) {
-        viewport.innerHTML = "<div class='expired-msg'>Stream Link Expired</div>";
-        return;
-    }
-
-    const src = atob(_0xV1);
-    
-    // ANTI-AD PROTECTION: Restricted sandbox to block popups/redirects
-    viewport.innerHTML = `
-        <iframe 
-            id="stream-player"
-            src="${src}" 
-            allow="autoplay; encrypted-media; fullscreen; picture-in-picture" 
-            sandbox="allow-scripts allow-same-origin allow-forms"
-            allowfullscreen="true" 
-            referrerpolicy="no-referrer">
-        </iframe>
-    `;
-};
-
-/* Basic DevTools Protection */
+/* We have removed the 'sandbox' and 'ad-shield' layers. 
+   These are the main causes of the black screen issue.
+*/
 document.onkeydown = (e) => {
-    if(e.keyCode == 123 || 
-      (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || 
-      (e.ctrlKey && e.keyCode == 85)) {
+    if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85)) {
         return false;
     }
 };
